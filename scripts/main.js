@@ -10,7 +10,6 @@ function draw_cells(canvas_divisions) {
         for (let j = 1; j <= canvas_divisions; j++) {
             const newdiv = document.createElement('div');
             newdiv.classList.add(`cell`);
-            newdiv.setAttribute('style', `grid-column: span 1; grid-row: span`)
             canvas_div.appendChild(newdiv);
         }
     }
@@ -22,15 +21,18 @@ function draw_cells(canvas_divisions) {
             if (color_mode == 'rainbow') {
                 let color = Math.floor(Math.random()*16777215).toString(16);
                 cell.setAttribute('style', `background-color: #${color};`);
+                // cell.classList.add('drawn_rainbow');
             } else {
+                // cell.classList.add('drawn');
                 cell.setAttribute('style', `background-color: black;`);
+
             }
             
         });
     });
 }
 
-function clear_cells() {
+function redraw_cells() {
     let cells = document.querySelector("div#canvas").querySelectorAll("div.cell");
     cells.forEach((cell) => {
         cell.remove();
@@ -54,16 +56,14 @@ color_btn.addEventListener('click', () => {
 const clear_btn = document.querySelector('#clear_btn');
 // event listener for color button
 clear_btn.addEventListener('click', () => {
-    clear_cells();
+    redraw_cells();
 });
 
 const grid_res_slider = document.querySelector('input#grid_res_slider');
 // event listener for the grid resolution slider
 grid_res_slider.addEventListener('click', () => {
-    canvas_divisions = grid_res_slider.value;
     current_grid_res.textContent = `${grid_res_slider.value}`;
-    clear_cells();
-    draw_cells(canvas_divisions);
+    redraw_cells();
 });
 
 const current_grid_res = document.querySelector('div#current_grid_res');
