@@ -1,6 +1,20 @@
-.main {
+#main {
     display: grid; 
     grid-template-columns: 1fr 2fr 1fr;
     justify-items: center;
     align-items: center;
+}
+
+#controls {
+    display: grid; 
+    row-gap: 15px;
+}
+
+#rainbow_btn {
+    height: 40px;
+    font-family: Lobster; 
+    font-size: 20px; 
+    background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
 }

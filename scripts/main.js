@@ -1,9 +1,9 @@
 const canvas_side = 640;
 let color_mode = 'default';
 
-function drawCells(canvas_divisions) {
+function draw_cells(canvas_divisions) {
     // set up the CSS grid on the canvas div
-    let canvas_div = document.querySelector('div.canvas');
+    let canvas_div = document.querySelector('div#canvas');
     canvas_div.setAttribute('style', `display: grid; grid-template-columns: repeat(${canvas_divisions}, 1fr); grid-template-rows: repeat(${canvas_divisions}, 1fr); box-shadow: 0px 0px 10px gray; height: ${canvas_side}px; width: ${canvas_side}px;`);
     // now use a loop to create the cells and then add them to the canvas div
     for (let i = 1; i <= canvas_divisions; i++) {
@@ -14,6 +14,7 @@ function drawCells(canvas_divisions) {
             canvas_div.appendChild(newdiv);
         }
     }
+
     // drawing capability, mouseover event colors each cell
     const cells = document.querySelectorAll("div.cell");
     cells.forEach((cell) => {
@@ -29,55 +30,45 @@ function drawCells(canvas_divisions) {
     });
 }
 
-function removeCells() {
-    let cells = document.querySelector("div.canvas").querySelectorAll("div.cell");
+function clear_cells() {
+    let cells = document.querySelector("div#canvas").querySelectorAll("div.cell");
     cells.forEach((cell) => {
         cell.remove();
     });
+    const grid_res = document.querySelector('input#grid_res_slider');
+    draw_cells(grid_res.value);
 }
 
-let canvas_divisions = 16;
-let cell_size = canvas_side / canvas_divisions;
-drawCells(canvas_divisions, cell_size);
-
-const controls_div = document.querySelector('div.controls');
-controls_div.setAttribute('style', 'display: grid; row-gap: 15px;')
-const grid_res_slider = document.createElement('input');
-grid_res_slider.setAttribute('type', 'range');
-grid_res_slider.setAttribute('min', '1');
-grid_res_slider.setAttribute('max', '100');
-grid_res_slider.setAttribute('value', '16');
-
-const current_grid_res = document.createElement('div');
-current_grid_res.setAttribute('style', 'text-align: center;');
-current_grid_res.textContent = `${grid_res_slider.value}`;
-
-const rainbow_btn = document.createElement('button');
-rainbow_btn.setAttribute('style', 'height: 40px; width; 80px; font-family: Lobster; font-size: 20px; background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
-rainbow_btn.textContent = `Rainbow Mode`;
-// event listener for clear button, removes the cells then redraws them
+const rainbow_btn = document.querySelector('#rainbow_btn');
+// event listener for rainbow button
 rainbow_btn.addEventListener('click', () => {
     color_mode = 'rainbow';
 });
 
-const color_btn = document.createElement('button');
-color_btn.setAttribute('style', 'height: 40px; width; 80px; font-family: Lobster; font-size: 20px;');
-color_btn.textContent = `Color Mode`;
-// event listener for clear button, removes the cells then redraws them
+const color_btn = document.querySelector('#color_btn');
+// event listener for color button
 color_btn.addEventListener('click', () => {
     color_mode = 'default';
 });
 
-controls_div.appendChild(current_grid_res);
-controls_div.appendChild(grid_res_slider);
-controls_div.appendChild(rainbow_btn);
-controls_div.appendChild(color_btn);
+const clear_btn = document.querySelector('#clear_btn');
+// event listener for color button
+clear_btn.addEventListener('click', () => {
+    clear_cells();
+});
 
-// event listener for clear button, removes the cells then redraws them
+const grid_res_slider = document.querySelector('input#grid_res_slider');
+// event listener for the grid resolution slider
 grid_res_slider.addEventListener('click', () => {
     canvas_divisions = grid_res_slider.value;
     current_grid_res.textContent = `${grid_res_slider.value}`;
-    removeCells();
-    drawCells(canvas_divisions);
+    clear_cells();
+    draw_cells(canvas_divisions);
 });
 
+const current_grid_res = document.querySelector('div#current_grid_res');
+current_grid_res.setAttribute('style', 'text-align: center;');
+current_grid_res.textContent = `${grid_res_slider.value}`;
+
+let canvas_divisions = 16;
+draw_cells(canvas_divisions);

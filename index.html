@@ -5,9 +5,15 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
     </head>
     <body>
-        <div class="main">
-            <div class="controls"></div>
-            <div class="canvas"></div>
+        <div id="main">
+            <div id="controls">
+                <div id="current_grid_res"></div>
+                <input type="range" min="1" max="100" value="16" id="grid_res_slider">
+                <input type="button" id="rainbow_btn" value="Rainbow Mode">
+                <input type="button" id="color_btn" value="Color Mode">
+                <input type="button" id="clear_btn" value="Clear Grid">
+            </div>
+            <div id="canvas"></div>
             <div></div> 
         </div>
         <script src="scripts/main.js"></script>
