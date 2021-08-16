@@ -1,4 +1,5 @@
 const canvas_side = 640;
+let color_mode = 'default';
 
 function drawCells(canvas_divisions) {
     // set up the CSS grid on the canvas div
@@ -17,7 +18,13 @@ function drawCells(canvas_divisions) {
     const cells = document.querySelectorAll("div.cell");
     cells.forEach((cell) => {
         cell.addEventListener('mouseover', () => {
-            cell.classList.add('drawn');
+            if (color_mode == 'rainbow') {
+                let color = Math.floor(Math.random()*16777215).toString(16);
+                cell.setAttribute('style', `background-color: #${color};`);
+            } else {
+                cell.setAttribute('style', `background-color: black;`);
+            }
+            
         });
     });
 }
@@ -34,6 +41,7 @@ let cell_size = canvas_side / canvas_divisions;
 drawCells(canvas_divisions, cell_size);
 
 const controls_div = document.querySelector('div.controls');
+controls_div.setAttribute('style', 'display: grid; row-gap: 15px;')
 const grid_res_slider = document.createElement('input');
 grid_res_slider.setAttribute('type', 'range');
 grid_res_slider.setAttribute('min', '1');
@@ -45,12 +53,25 @@ current_grid_res.setAttribute('style', 'text-align: center;');
 current_grid_res.textContent = `${grid_res_slider.value}`;
 
 const rainbow_btn = document.createElement('button');
-rainbow_btn.setAttribute('style', 'height: 40px; width; 80px;');
-rainbow_btn.textContent = `Rainbow`;
+rainbow_btn.setAttribute('style', 'height: 40px; width; 80px; font-family: Lobster; font-size: 20px; background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
+rainbow_btn.textContent = `Rainbow Mode`;
+// event listener for clear button, removes the cells then redraws them
+rainbow_btn.addEventListener('click', () => {
+    color_mode = 'rainbow';
+});
+
+const color_btn = document.createElement('button');
+color_btn.setAttribute('style', 'height: 40px; width; 80px; font-family: Lobster; font-size: 20px;');
+color_btn.textContent = `Color Mode`;
+// event listener for clear button, removes the cells then redraws them
+color_btn.addEventListener('click', () => {
+    color_mode = 'default';
+});
 
 controls_div.appendChild(current_grid_res);
 controls_div.appendChild(grid_res_slider);
 controls_div.appendChild(rainbow_btn);
+controls_div.appendChild(color_btn);
 
 // event listener for clear button, removes the cells then redraws them
 grid_res_slider.addEventListener('click', () => {
