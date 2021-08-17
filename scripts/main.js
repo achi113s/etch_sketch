@@ -8,29 +8,11 @@ function draw_cells(canvas_divisions) {
     canvas_div.setAttribute('style', `display: grid; grid-template-columns: repeat(${canvas_divisions}, 1fr); grid-template-rows: repeat(${canvas_divisions}, 1fr);`);
     // now use a loop to create the cells and then add them to the canvas div
     for (let i = 1; i <= canvas_divisions*canvas_divisions; i++) {
-        const newdiv = document.createElement('div');
-        newdiv.classList.add(`cell`);
-        canvas_div.appendChild(newdiv);
+        const cell = document.createElement('div');
+        cell.classList.add(`cell`);
+        cell.addEventListener('mouseover', color_cell);
+        canvas_div.appendChild(cell);
     }
-
-    // drawing capability, mouseover event colors each cell
-    const cells = document.querySelectorAll("div.cell");
-    cells.forEach((cell) => {
-        cell.addEventListener('mouseover', () => {
-            if (color_mode == 'rainbow') {
-                let r = Math.floor(Math.random()*256);
-                let g = Math.floor(Math.random()*256);
-                let b = Math.floor(Math.random()*256);
-                cell.setAttribute('style', `background-color: rgb(${r}, ${g}, ${b});`);
-                // cell.classList.add('drawn_rainbow');
-            } else {
-                // cell.classList.add('drawn');
-                cell.setAttribute('style', `background-color: ${default_color};`);
-
-            }
-            
-        });
-    });
 }
 
 function redraw_cells() {
@@ -40,6 +22,17 @@ function redraw_cells() {
     });
     const grid_res = document.querySelector('input#grid_res_slider');
     draw_cells(grid_res.value);
+}
+
+function color_cell(e) {
+    if (color_mode == 'rainbow') {
+        let r = Math.floor(Math.random()*256);
+        let g = Math.floor(Math.random()*256);
+        let b = Math.floor(Math.random()*256);
+        e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    } else {
+        e.target.style.backgroundColor = `${default_color}`;
+    }
 }
 
 const rainbow_btn = document.querySelector('#rainbow_btn');
