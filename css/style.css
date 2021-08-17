@@ -8,7 +8,7 @@
 
 #main {
     display: grid; 
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
 }
@@ -18,11 +18,14 @@
     row-gap: 15px;
 }
 
-#rainbow_btn {
-    font-family: Lobster; 
-    font-size: 20px; 
-    background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent;
+#canvas {
+    box-shadow: 0px 0px 10px gray; 
+    height: 640px; 
+    width: 640px;
 }
 
+#title {
+    text-align: center;
+    font-size: 120px;
+    margin-bottom: 50px;
+}
