@@ -25,13 +25,15 @@ function redraw_cells() {
 }
 
 function color_cell(e) {
-    if (color_mode == 'rainbow') {
-        let r = Math.floor(Math.random()*256);
-        let g = Math.floor(Math.random()*256);
-        let b = Math.floor(Math.random()*256);
-        e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    } else if (color_mode == 'single'){
-        e.target.style.backgroundColor = `${single_color}`;
+    switch (color_mode) {
+        case 'rainbow':
+            let r = Math.floor(Math.random()*256);
+            let g = Math.floor(Math.random()*256);
+            let b = Math.floor(Math.random()*256);
+            e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            break;
+        case 'single':
+            e.target.style.backgroundColor = `${single_color}`;
     }
 }
 
@@ -48,7 +50,7 @@ color_btn.addEventListener('click', () => {
 });
 
 const clear_btn = document.querySelector('#clear_btn');
-// event listener for color button
+// event listener for clear button
 clear_btn.addEventListener('click', () => {
     redraw_cells();
 });
