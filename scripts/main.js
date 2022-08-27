@@ -1,6 +1,6 @@
 const canvas_side = 640;
-const default_color = '#333'
-let color_mode = 'default';
+let single_color = 'rgb(56, 56, 56)';
+let color_mode = 'single';
 
 function draw_cells(canvas_divisions) {
     // set up the CSS grid on the canvas div
@@ -30,8 +30,8 @@ function color_cell(e) {
         let g = Math.floor(Math.random()*256);
         let b = Math.floor(Math.random()*256);
         e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    } else {
-        e.target.style.backgroundColor = `${default_color}`;
+    } else if (color_mode == 'single'){
+        e.target.style.backgroundColor = `${single_color}`;
     }
 }
 
@@ -44,7 +44,7 @@ rainbow_btn.addEventListener('click', () => {
 const color_btn = document.querySelector('#color_btn');
 // event listener for color button
 color_btn.addEventListener('click', () => {
-    color_mode = 'default';
+    color_mode = 'single';
 });
 
 const clear_btn = document.querySelector('#clear_btn');
@@ -58,11 +58,16 @@ current_grid_res.setAttribute('style', 'text-align: center;');
 const grid_res_slider = document.querySelector('input#grid_res_slider');
 // event listener for the grid resolution slider
 grid_res_slider.addEventListener('click', () => {
-    current_grid_res.textContent = `${grid_res_slider.value} x ${grid_res_slider.value}`;
+    current_grid_res.textContent = `Resolution: ${grid_res_slider.value} x ${grid_res_slider.value}`;
     redraw_cells();
 });
 
-current_grid_res.textContent = `${grid_res_slider.value} x ${grid_res_slider.value}`;
+// event listener for color picker
+const color_picker = document.querySelector('input#color_picker');
+color_picker.addEventListener('change', (e) => {
+    single_color = e.target.value;
+});
 
+current_grid_res.textContent = `Resolution: ${grid_res_slider.value} x ${grid_res_slider.value}`;
 let canvas_divisions = 16;
 draw_cells(canvas_divisions);

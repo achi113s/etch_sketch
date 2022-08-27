@@ -1,11 +1,3 @@
-.drawn {
-    background-color: black;
-}
-
-.drawn_rainbow {
-    background-color: red;
-}
-
 #main {
     display: grid; 
     grid-template-columns: 1fr 1fr 1fr;
@@ -14,7 +6,8 @@
 }
 
 #controls {
-    display: grid; 
+    display: grid;
+    align-items: center;
     row-gap: 15px;
 }
 
